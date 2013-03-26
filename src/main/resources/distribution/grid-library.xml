@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grid-library>
+    <grid-library-name>glassfish3_0_1-distribution</grid-library-name>
+    <grid-library-version>2.0.0</grid-library-version>
+
+    <!-- No dependencies -->
+
+    <!-- No conflicts -->
+
+    <!-- No JAR paths -->
+
+    <!-- No library paths -->
+
+    <!-- No assembly paths -->
+
+    <!-- No command paths -->
+
+    <!-- No hooks paths -->
+
+    <!-- No environment variables -->
+
+    <!-- No system properties -->
+
+</grid-library>

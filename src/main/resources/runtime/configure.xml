@@ -1,0 +1,63 @@
+<containerConfig name="Glassfish 3.0 Container - version 1.0">
+
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib" include="processLauncher.xml">
+        <velocity />
+    </configfiles>
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin" include="*.bat">
+        <regex pattern="java\s+-" replacement="${GRIDLIB_JAVA_HOME}\bin\java -" />
+        <regex pattern="%JAVA%\s+-" replacement="${GRIDLIB_JAVA_HOME}\bin\java -" />
+        <regex pattern="--domaindir" replacement="--domaindir ${DOMAIN_ROOT}" />
+    </configfiles>
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/config" include="asadminenv.conf">
+        <property key="AS_ADMIN_PORT" value="${ADMIN_PORT}" />
+    </configfiles>
+    <configfiles baseDir="${DOMAIN_HOME}/docroot" include="index.html">
+        <regex pattern="http://localhost:4848" replacement="http://localhost:${ADMIN_PORT}" />
+    </configfiles>
+    
+    <configfiles baseDir="${DOMAIN_HOME}/config" include="sun-acc.xml">
+        <xpath expression="/client-container/target-server/@port" value="${ORB_LISTENER_PORT}" />
+        <xpath expression="/client-container/target-server/@name" value="${SERVER_ID}" />
+        <xpath expression="/client-container/message-security-config/provider-config[@provider-id='ClientProvider']/property[@name='security.config']/@value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/appclient/wss-client-config-1.0.xml" />
+    </configfiles>
+    
+    <configfiles baseDir="${DOMAIN_HOME}/config" include="domain.xml">
+        <xpath expression="/domain/servers/server/@name" value="${SERVER_ID}" />
+        <xpath expression="/domain/servers/server/@config-ref" value="${CONFIG_MODEL_NAME}" />
+        <xpath expression="/domain/configs/config[@name='server-config']/iiop-service/iiop-listener[@id='orb-listener-1']/@port" runtimeVariable="ORB_LISTENER_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/iiop-service/iiop-listener[@id='SSL_MUTUALAUTH']/ssl/@client-auth-enabled" runtimeVariable="CLIENT_AUTH_ENABLED" />
+        <xpath expression="/domain/configs/config[@name='server-config']/iiop-service/iiop-listener[@id='SSL']/@port" runtimeVariable="ORB_SSL_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/iiop-service/iiop-listener[@id='SSL_MUTUALAUTH']/@port" runtimeVariable="ORB_MUTUALAUTH_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/admin-service/jmx-connector/@port" runtimeVariable="JMX_SYSTEM_CONNECTOR_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/jms-service[@type='EMBEDDED']/jms-host/@port" runtimeVariable="JMS_PROVIDER_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/jms-service[@type='EMBEDDED']/jms-host/@admin-user-name" runtimeVariable="ADMIN_USERID" />
+        <xpath expression="/domain/configs/config[@name='server-config']/jms-service[@type='EMBEDDED']/jms-host/@admin-password" runtimeVariable="ADMIN_PASSWORD" />
+        <xpath expression="/domain/configs/config[@name='server-config']/network-config/network-listeners/network-listener[@protocol='http-listener-1']/@port" runtimeVariable="HTTP_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/network-config/network-listeners/network-listener[@protocol='http-listener-2']/@port" runtimeVariable="HTTPS_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/network-config/network-listeners/network-listener[@protocol='admin-listener']/@port" runtimeVariable="ADMIN_PORT" />
+        <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Xmx')]" action="Set Node Text" runtimeVariable="JAVA_MEMORY_OPTS" />
+        <xpath expression="/domain/property[@name='administrative.domain.name']/@value" value="${DOMAIN_NAME}" />
+        <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.endorsed.dirs')]" action="Set Node Text">
+        	-Djava.endorsed.dirs=${GLASSFISH_SERVER_BASE_DIR}/glassfish/modules/endorsed${path.separator}${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/endorsed 
+        </xpath>
+        <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.ext.dirs')]" action="Set Node Text">
+        	-Djava.ext.dirs=${GRIDLIB_JAVA_HOME}/lib/ext${path.separator}${GRIDLIB_JAVA_HOME}/jre/lib/ext${path.separator}${DOMAIN_HOME}/lib/ext 
+        </xpath>
+        <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djavax.net.ssl.keyStore')]" action="Set Node Text">
+        	-Djavax.net.ssl.keyStore=${DOMAIN_HOME}/config/${SERVER_KEY_STORE_FILE_NAME} 
+        </xpath>
+        <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djavax.net.ssl.trustStore')]" action="Set Node Text">
+        	-Djavax.net.ssl.trustStore=${DOMAIN_HOME}/config/${SERVER_TRUST_STORE_FILE_NAME} 
+        </xpath>
+    </configfiles>
+    
+    <configfiles baseDir="${DOMAIN_HOME}/config" include="domain.xml">
+        <regex pattern="-Dosgi.shell.telnet.port=(\d+)" runtimeVariable="OSGI_SHELL_TELNET_PORT"/>
+    </configfiles>
+    
+    <configfiles baseDir="${DOMAIN_HOME}/osgi-cache/felix" action="Remove" include="inhabitants">
+    </configfiles>
+    <configfiles baseDir="${DOMAIN_HOME}/osgi-cache/felix" action="Remove" include="bundle*">
+    </configfiles>
+   
+</containerConfig>

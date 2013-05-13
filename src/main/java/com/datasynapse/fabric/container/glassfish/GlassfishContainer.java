@@ -207,7 +207,7 @@ public class GlassfishContainer extends ExecContainer {
                 throw new Exception("Deployment of " + fullFilename + " failed");
             }
         }
-}
+    }
 
     protected boolean shouldCopyConfigFile(File configFile) {
         boolean ret = true;
@@ -291,16 +291,18 @@ public class GlassfishContainer extends ExecContainer {
 
     protected void checkAndSaveProperty(Properties toBeSavedProps, String name) {
         String value = System.getProperty(name);
-        if (!StringUtils.isEmpty(value))
+        if (!StringUtils.isEmpty(value)) {
             toBeSavedProps.put(name, value);
+        }
     }
 
     protected void revertEnvironment(Properties envSaved) {
         for (Iterator itr = envSaved.keySet().iterator(); itr.hasNext(); ) {
             String key = (String)itr.next();
             String val = envSaved.getProperty(key);
-            if (val != null)
+            if (val != null) {
                 System.setProperty(key, val);
+            }
         }
     }
     

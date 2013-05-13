@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assembly>
     <id>runtime</id>
-	<baseDirectory></baseDirectory>
-	<formats>
-		<format>tar.gz</format>
-	</formats>
-	<fileSets>
-	    <fileSet>
-	        <directory>src/main/resources/runtime</directory>
+    <baseDirectory></baseDirectory>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources/runtime</directory>
             <outputDirectory/>
-	        <excludes>
-	            <exclude>container.xml</exclude>
-	            <exclude>grid-library.xml</exclude>
-	        </excludes>
-	    </fileSet>
+            <excludes>
+                <exclude>container.xml</exclude>
+                <exclude>grid-library.xml</exclude>
+            </excludes>
+        </fileSet>
         <fileSet>
             <directory>src/main/resources/runtime</directory>
             <outputDirectory/>
@@ -30,6 +30,6 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
-	</fileSets>
+    </fileSets>
 </assembly>
 

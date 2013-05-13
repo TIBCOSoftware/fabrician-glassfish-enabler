@@ -1,55 +1,55 @@
 <container class="com.datasynapse.fabric.container.glassfish.GlassfishContainer" name="GlassfishContainer">
 
-	<import package="com.datasynapse.fabric.common"/>
-	<import package="com.datasynapse.fabric.container"/>
-	<import package="com.datasynapse.fabric.util"/>
-	<import package="com.datasynapse.fabric.stats"/>
-	<import package="com.datasynapse.fabric.stats.aggregator"/>
-	<import package="com.datasynapse.fabric.stats.evaluator"/>
-	<import package="com.datasynapse.fabric.stats.provider"/>
-	<import package="com.datasynapse.fabric.domain"/>
-	<import package="com.datasynapse.fabric.container.glassfish"/>
-	
-	<property name="name" value="Glassfish Container"/>
-	<property name="version" value="1.0.0.0"/>
-	<property name="distributionVersion" value="3.0.1"/>
+    <import package="com.datasynapse.fabric.common"/>
+    <import package="com.datasynapse.fabric.container"/>
+    <import package="com.datasynapse.fabric.util"/>
+    <import package="com.datasynapse.fabric.stats"/>
+    <import package="com.datasynapse.fabric.stats.aggregator"/>
+    <import package="com.datasynapse.fabric.stats.evaluator"/>
+    <import package="com.datasynapse.fabric.stats.provider"/>
+    <import package="com.datasynapse.fabric.domain"/>
+    <import package="com.datasynapse.fabric.container.glassfish"/>
+    
+    <property name="name" value="Glassfish Container"/>
+    <property name="version" value="1.0.0.0"/>
+    <property name="distributionVersion" value="3.0.1"/>
 
-	<property name="supportedDomainType" value="J2EE"/>
-	
-	<property name="blocking" value="true"/>
+    <property name="supportedDomainType" value="J2EE"/>
+    
+    <property name="blocking" value="true"/>
 
-	<property name="workDir" value="${GLASSFISH_SERVER_BASE_DIR}"/>
-	
-	<windowsCommand class="LifecycleCommand">
-		<property name='startupCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\startserv.bat"'/>
-		<property name='shutdownCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\stopserv.bat"'/>
-	</windowsCommand>
-	
-	<unixCommand class="LifecycleCommand">
-		<property name="startupCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/startserv.sh"/>
-		<property name="shutdownCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/stopserv.sh"/>
-	</unixCommand>
+    <property name="workDir" value="${GLASSFISH_SERVER_BASE_DIR}"/>
+    
+    <windowsCommand class="LifecycleCommand">
+        <property name='startupCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\startserv.bat"'/>
+        <property name='shutdownCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\stopserv.bat"'/>
+    </windowsCommand>
+    
+    <unixCommand class="LifecycleCommand">
+        <property name="startupCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/startserv.sh"/>
+        <property name="shutdownCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/stopserv.sh"/>
+    </unixCommand>
 
-	<supportedFeature class="Feature">
-		<property name="name" value="HTTP Support"/>
-		<property name="description" value="Support for HTTP routing"/>
-		<property name="infoDescription" value="Specify the protocols to report to the Broker for HTTP routing."/>
-		<property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo"/>
-	</supportedFeature>
+    <supportedFeature class="Feature">
+        <property name="name" value="HTTP Support"/>
+        <property name="description" value="Support for HTTP routing"/>
+        <property name="infoDescription" value="Specify the protocols to report to the Broker for HTTP routing."/>
+        <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo"/>
+    </supportedFeature>
 
-	<supportedFeature class="Feature">
-		<property name="name" value="Archive Support"/>
-		<property name="description" value="Support for deploying archives"/>
-		<property name="infoDescription" value="This Feature adds support for deployment of J2EE Archive files.  You may upload archives on the &lt;b&gt;Add/Remove Archive Files&lt;/b&gt; page."/>
-		<property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.ArchiveFeatureInfo"/>
-	</supportedFeature>
-	
-	<supportedFeature class="Feature">
-		<property name="name" value="Application Logging Support"/>
-		<property name="description" value="Support for handling of custom application logs"/>
-		<property name="infoDescription" value="Specify if application logs are archived to the Engine log directory for viewing/searching. &lt;i>Note: The current application logs are still available for viewing/searching if this is not checked.&lt;/i>"/>
-		<property name="infoClass" value="com.datasynapse.fabric.container.glassfish.GlassfishApplicationLoggingInfo"/>
-	</supportedFeature>
+    <supportedFeature class="Feature">
+        <property name="name" value="Archive Support"/>
+        <property name="description" value="Support for deploying archives"/>
+        <property name="infoDescription" value="This Feature adds support for deployment of J2EE Archive files.  You may upload archives on the &lt;b&gt;Add/Remove Archive Files&lt;/b&gt; page."/>
+        <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.ArchiveFeatureInfo"/>
+    </supportedFeature>
+    
+    <supportedFeature class="Feature">
+        <property name="name" value="Application Logging Support"/>
+        <property name="description" value="Support for handling of custom application logs"/>
+        <property name="infoDescription" value="Specify if application logs are archived to the Engine log directory for viewing/searching. &lt;i>Note: The current application logs are still available for viewing/searching if this is not checked.&lt;/i>"/>
+        <property name="infoClass" value="com.datasynapse.fabric.container.glassfish.GlassfishApplicationLoggingInfo"/>
+    </supportedFeature>
     
     <supportedFeature class="Feature">
         <property name="name" value="Capture Support"/>
@@ -57,498 +57,498 @@
         <property name="infoDescription" value="Specify if capture is enabled for this Application Component"/>
         <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.CaptureFeatureInfo"/>
     </supportedFeature>
-	
-	<runtimeContextTemplate class="DefaultRuntimeContext">
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CAPTURE_INCLUDES"/>
-			<property name="value" value="glassfish/domains/domain/config/.*,glassfish/domains/domain/applications/.*/.*,glassfish/domains/domain/generated/.*/.*,glassfish/domains/domain/docroot/.*/.*"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Directories to capture"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CAPTURE_EXCLUDES"/>
-			<property name="value" value="glassfish/domains/domain/osgi-cache/.*"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Directories to ignore"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JDK_NAME"/>
-			<property name="value" value="j2sdk"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The name of the required JDK"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JDK_VERSION"/>
-			<property name="value" value="1.6"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The version of the required JDK"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="DELETE_RUNTIME_DIR_ON_SHUTDOWN"/>
-			<property name="value" value="true"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="Whether to delete the runtime directory on shutdown"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="GLASSFISH_HOME_URI"/>
-			<property name="value" value='file:/${DynamicVarsUtils.toCanonicalJavaPath("GLASSFISH_SERVER_BASE_DIR")}'/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="The GLASSFISH home directory"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="GLASSFISH_SERVER_BASE_DIR"/>
-			<property name="value" value="${ENGINE_WORK_DIR}/glassfishv3_Domain"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Append"/>
-			<property name="description" value="The GLASSFISH server base directory"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="FELIX_HOME"/>
-			<property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/osgi/felix"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="The Felix container base directory"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="GLASSFISH_SERVER_BASE_URL"/>
-			<property name="value" value="file:${GLASSFISH_SERVER_BASE_DIR}"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="The GLASSFISH server base URL"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="J2EE_ARCHIVE_DEPLOY_DIRECTORY"/>
-			<property name="value" value="${DOMAIN_HOME}/autodeploy"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The GLASSFISH archive deployment directory"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JAVA_MEMORY_OPTS"/>
-			<property name="value" value="-Xmx512m"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="Additional Java process memory options"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="GLASSFISH_SERVER_CONFIG_DIR_NAME"/>
-			<property name="value" value="glassfishv3_Domain"/>
-			<property name="type" value="String"/>
-			<property name="autoIncrementType" value="Append"/>
-			<property name="description" value="The GLASSFISH configuration directory name"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_ID"/>
-			<property name="value" value="server"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="The unique name assigned to a GLASSFISH server instance for lookup purposes"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CONFIG_MODEL_NAME"/>
-			<property name="value" value="server-config"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="The unique name assigned to a GLASSFISH server instance for lookup purposes"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ARCHIVE_DEPLOYMENT_TIMEOUT"/>
-			<property name="value" value="120"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The amount of time in seconds to allow for each archive deployment to finish in standalone mode.  Only valid if VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS is true."/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS"/>
-			<property name="value" value="true"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Whether or not to verify successful deployment of J2EE archives.  This must be set to true for archive ordering."/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="IGNORE_HOSTNAME_VERIFICATION"/>
-			<property name="value" value="true"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="Ignore hostname verification when connecting to the GLASSFISH MBean server"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CLIENT_AUTH_ENABLED"/>
-			<property name="value" value="true"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="SSL/TLS Connector port configuration"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_KEY_STORE_FILE_NAME"/>
-			<property name="value" value="keystore.jks"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Server key store file name for incoming SSL connections"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_KEY_STORE_FILE"/>
-			<property name="value" value="${DOMAIN_HOME}/config/${SERVER_KEY_STORE_FILE_NAME}"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Server key store file location for incoming SSL connections"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_KEY_STORE_PASSWORD"/>
-			<property name="value" value="changeit"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Password for the server key store"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_TRUST_STORE_FILE_NAME"/>
-			<property name="value" value="cacerts.jks"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Server trust store file name  for outgoing SSL connections"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_TRUST_STORE_FILE"/>
-			<property name="value" value="${DOMAIN_HOME}/config/${SERVER_TRUST_STORE_FILE_NAME}"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Server trust store file location for outgoing SSL connections"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="SERVER_TRUST_STORE_PASSWORD"/>
-			<property name="value" value="changeit"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Password for the server trust store"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="DOMAIN_ROOT"/>
-			<property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/domains"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Location of the Domain configuration"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="DOMAIN_HOME"/>
-			<property name="value" value="${DOMAIN_ROOT}/domain"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Location of the Domain configuration"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CLIENT_KEY_STORE_FILE"/>
-			<property name="value" value="${DOMAIN_HOME}/config/keystore.jks"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Client key store file for connecting to the GLASSFISH MBean server when TWO_WAY_SSL_ENABLED is true"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CLIENT_KEY_STORE_PASSWORD"/>
-			<property name="value" value="changeit"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Client key store password for connecting to the GLASSFISH MBean server when TWO_WAY_SSL_ENABLED is true"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CLIENT_TRUST_STORE_FILE"/>
-			<property name="value" value="${DOMAIN_HOME}/config/cacerts.jks"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Client trust store file used when connecting to the GLASSFISH MBean server"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="CLIENT_TRUST_STORE_PASSWORD"/>
-			<property name="value" value="changeit"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Client trust store password used when connecting to the GLASSFISH MBean server"/>
-		</variable>
-		<!-- ==================== DYNAMIC PORT DECLARATIONS for ds-port-bindings.xml ==================== -->
-		<!-- ports for section tomcat -->
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ORB_LISTENER_PORT"/>
-			<property name="value" value="3700"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="ORB listen port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ORB_SSL_PORT"/>
-			<property name="value" value="3820"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="ORB SSL listen port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ORB_MUTUALAUTH_PORT"/>
-			<property name="value" value="3920"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="ORB MutualAuth listen port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JMX_SYSTEM_CONNECTOR_PORT"/>
-			<property name="value" value="8686"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="Jmx System Connector Port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JMX_SERVICE_URL"/>
-			<property name="value" value="service:jmx:rmi://${HostUtils.getFQHostname()}:${JMX_SYSTEM_CONNECTOR_PORT}/jndi/rmi://${HostUtils.getFQHostname()}:${JMX_SYSTEM_CONNECTOR_PORT}/jmxrmi"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="Jmx Service URL"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JMS_PROVIDER_PORT"/>
-			<property name="value" value="6767"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="Jms Provider Port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ADMIN_USERID"/>
-			<property name="value" value="admin"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Admin Userid"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ADMIN_PASSWORD"/>
-			<property name="value" value="adminadmin"/>
-			<property name="type" value="String"/>
-			<property name="description" value="Admin Password"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="OSGI_SHELL_TELNET_PORT"/>
-			<property name="value" value="6666"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="OSGI Shell Telnet Port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="HTTP_PORT"/>
-			<property name="value" value="9090"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="HTTP listen port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="HTTPS_PORT"/>
-			<property name="value" value="9190"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="type" value="Environment"/>
-			<property name="description" value="HTTPS listen port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="ADMIN_PORT"/>
-			<property name="value" value="4848"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Numeric"/>
-			<property name="description" value="Admin port"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="DOMAIN_NAME"/>
-			<property name="value" value="domain"/>
-			<property name="type" value="Environment"/>
-			<property name="autoIncrementType" value="Append"/>
-			<property name="description" value="The unique name assigned to a GLASSFISH server domain for lookup purposes"/>
-		</variable>
+    
+    <runtimeContextTemplate class="DefaultRuntimeContext">
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CAPTURE_INCLUDES"/>
+            <property name="value" value="glassfish/domains/domain/config/.*,glassfish/domains/domain/applications/.*/.*,glassfish/domains/domain/generated/.*/.*,glassfish/domains/domain/docroot/.*/.*"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Directories to capture"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CAPTURE_EXCLUDES"/>
+            <property name="value" value="glassfish/domains/domain/osgi-cache/.*"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Directories to ignore"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JDK_NAME"/>
+            <property name="value" value="j2sdk"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The name of the required JDK"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JDK_VERSION"/>
+            <property name="value" value="1.6"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The version of the required JDK"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="DELETE_RUNTIME_DIR_ON_SHUTDOWN"/>
+            <property name="value" value="true"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="Whether to delete the runtime directory on shutdown"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="GLASSFISH_HOME_URI"/>
+            <property name="value" value='file:/${DynamicVarsUtils.toCanonicalJavaPath("GLASSFISH_SERVER_BASE_DIR")}'/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="The GLASSFISH home directory"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="GLASSFISH_SERVER_BASE_DIR"/>
+            <property name="value" value="${ENGINE_WORK_DIR}/glassfishv3_Domain"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Append"/>
+            <property name="description" value="The GLASSFISH server base directory"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="FELIX_HOME"/>
+            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/osgi/felix"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="The Felix container base directory"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="GLASSFISH_SERVER_BASE_URL"/>
+            <property name="value" value="file:${GLASSFISH_SERVER_BASE_DIR}"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="The GLASSFISH server base URL"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="J2EE_ARCHIVE_DEPLOY_DIRECTORY"/>
+            <property name="value" value="${DOMAIN_HOME}/autodeploy"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The GLASSFISH archive deployment directory"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JAVA_MEMORY_OPTS"/>
+            <property name="value" value="-Xmx512m"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="Additional Java process memory options"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="GLASSFISH_SERVER_CONFIG_DIR_NAME"/>
+            <property name="value" value="glassfishv3_Domain"/>
+            <property name="type" value="String"/>
+            <property name="autoIncrementType" value="Append"/>
+            <property name="description" value="The GLASSFISH configuration directory name"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_ID"/>
+            <property name="value" value="server"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="The unique name assigned to a GLASSFISH server instance for lookup purposes"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CONFIG_MODEL_NAME"/>
+            <property name="value" value="server-config"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="The unique name assigned to a GLASSFISH server instance for lookup purposes"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ARCHIVE_DEPLOYMENT_TIMEOUT"/>
+            <property name="value" value="120"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The amount of time in seconds to allow for each archive deployment to finish in standalone mode.  Only valid if VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS is true."/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS"/>
+            <property name="value" value="true"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Whether or not to verify successful deployment of J2EE archives.  This must be set to true for archive ordering."/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="IGNORE_HOSTNAME_VERIFICATION"/>
+            <property name="value" value="true"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="Ignore hostname verification when connecting to the GLASSFISH MBean server"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CLIENT_AUTH_ENABLED"/>
+            <property name="value" value="true"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="SSL/TLS Connector port configuration"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_KEY_STORE_FILE_NAME"/>
+            <property name="value" value="keystore.jks"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Server key store file name for incoming SSL connections"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_KEY_STORE_FILE"/>
+            <property name="value" value="${DOMAIN_HOME}/config/${SERVER_KEY_STORE_FILE_NAME}"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Server key store file location for incoming SSL connections"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_KEY_STORE_PASSWORD"/>
+            <property name="value" value="changeit"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Password for the server key store"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_TRUST_STORE_FILE_NAME"/>
+            <property name="value" value="cacerts.jks"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Server trust store file name  for outgoing SSL connections"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_TRUST_STORE_FILE"/>
+            <property name="value" value="${DOMAIN_HOME}/config/${SERVER_TRUST_STORE_FILE_NAME}"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Server trust store file location for outgoing SSL connections"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="SERVER_TRUST_STORE_PASSWORD"/>
+            <property name="value" value="changeit"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Password for the server trust store"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="DOMAIN_ROOT"/>
+            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/domains"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Location of the Domain configuration"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="DOMAIN_HOME"/>
+            <property name="value" value="${DOMAIN_ROOT}/domain"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Location of the Domain configuration"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CLIENT_KEY_STORE_FILE"/>
+            <property name="value" value="${DOMAIN_HOME}/config/keystore.jks"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Client key store file for connecting to the GLASSFISH MBean server when TWO_WAY_SSL_ENABLED is true"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CLIENT_KEY_STORE_PASSWORD"/>
+            <property name="value" value="changeit"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Client key store password for connecting to the GLASSFISH MBean server when TWO_WAY_SSL_ENABLED is true"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CLIENT_TRUST_STORE_FILE"/>
+            <property name="value" value="${DOMAIN_HOME}/config/cacerts.jks"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Client trust store file used when connecting to the GLASSFISH MBean server"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="CLIENT_TRUST_STORE_PASSWORD"/>
+            <property name="value" value="changeit"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Client trust store password used when connecting to the GLASSFISH MBean server"/>
+        </variable>
+        <!-- ==================== DYNAMIC PORT DECLARATIONS for ds-port-bindings.xml ==================== -->
+        <!-- ports for section tomcat -->
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ORB_LISTENER_PORT"/>
+            <property name="value" value="3700"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="ORB listen port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ORB_SSL_PORT"/>
+            <property name="value" value="3820"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="ORB SSL listen port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ORB_MUTUALAUTH_PORT"/>
+            <property name="value" value="3920"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="ORB MutualAuth listen port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JMX_SYSTEM_CONNECTOR_PORT"/>
+            <property name="value" value="8686"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="Jmx System Connector Port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JMX_SERVICE_URL"/>
+            <property name="value" value="service:jmx:rmi://${HostUtils.getFQHostname()}:${JMX_SYSTEM_CONNECTOR_PORT}/jndi/rmi://${HostUtils.getFQHostname()}:${JMX_SYSTEM_CONNECTOR_PORT}/jmxrmi"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="Jmx Service URL"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JMS_PROVIDER_PORT"/>
+            <property name="value" value="6767"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="Jms Provider Port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ADMIN_USERID"/>
+            <property name="value" value="admin"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Admin Userid"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ADMIN_PASSWORD"/>
+            <property name="value" value="adminadmin"/>
+            <property name="type" value="String"/>
+            <property name="description" value="Admin Password"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="OSGI_SHELL_TELNET_PORT"/>
+            <property name="value" value="6666"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="OSGI Shell Telnet Port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="HTTP_PORT"/>
+            <property name="value" value="9090"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="HTTP listen port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="HTTPS_PORT"/>
+            <property name="value" value="9190"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="type" value="Environment"/>
+            <property name="description" value="HTTPS listen port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="ADMIN_PORT"/>
+            <property name="value" value="4848"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Numeric"/>
+            <property name="description" value="Admin port"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="DOMAIN_NAME"/>
+            <property name="value" value="domain"/>
+            <property name="type" value="Environment"/>
+            <property name="autoIncrementType" value="Append"/>
+            <property name="description" value="The unique name assigned to a GLASSFISH server domain for lookup purposes"/>
+        </variable>
 
-		<!-- ============= OTHER PORTS ( if any ) ============= -->
-	</runtimeContextTemplate>
-	
-	<startCondition class="GlassfishStartCondition">
-		<property name="pollPeriod" value="5000"/>		
-	</startCondition>
+        <!-- ============= OTHER PORTS ( if any ) ============= -->
+    </runtimeContextTemplate>
+    
+    <startCondition class="GlassfishStartCondition">
+        <property name="pollPeriod" value="5000"/>        
+    </startCondition>
 
-<!-- remove running condition for now, might be screwing up capture...	
-	<runningCondition class="GlassfishRunningCondition">
-		<property name="pollPeriod" value="10000"/>
-	</runningCondition>
-	-->
+<!-- remove running condition for now, might be screwing up capture...    
+    <runningCondition class="GlassfishRunningCondition">
+        <property name="pollPeriod" value="10000"/>
+    </runningCondition>
+    -->
 
     <statisticsProvider class="AMXStatisticsProvider">
 
-		<mBeanServerRef class="GlassfishMBeanServerRef"/>
-	    	
-		<!-- GLASSFISH.web.ThreadPool attributes -->
-		<supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTP Thread Pool Count "/>
-		    <property name="description" value="The number of threads in the HTTP pool."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-pool-mon,name=network/http-listener-1/thread-pool"/>
-		    <property name="attributeName" value="currentthreadsbusy.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="threads"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTPS Thread Pool Count"/>
-		    <property name="description" value="The number of threads in the HTTPS pool."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-pool-mon,name=network/http-listener-2/thread-pool"/>
-		    <property name="attributeName" value="currentthreadsbusy.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="threads"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH Server JVM Thread Count"/>
-		    <property name="description" value="The number of threads Server JVM is using."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
-		    <property name="attributeName" value="threadcount.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="threads"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	    
-    	<supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	    	<property name="name" value="GLASSFISH Thread Count"/>
-		    <property name="description" value="The number of active threads."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
-		    <property name="attributeName" value="threadcount.count"/> 
-	    	<property name="default" value="true"/> 
-		    <property name="units" value="threads"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	    
-    	<supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	    	<property name="name" value="GLASSFISH Peak Thread Count"/>
-		    <property name="description" value="The peak number of active threads."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
-		    <property name="attributeName" value="peakthreadcount.count"/> 
-	    	<property name="default" value="true"/> 
-		    <property name="units" value="threads"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	    
-	    <!-- GLASSFISH.web.GlobalRequestProcessor attributes -->
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	        <property name="name" value="GLASSFISH Throughput"/>
-	        <property name="description" value="The number of HTTP requests processed per second."/>
-	        <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-1/connection-queue"/> 
-			<property name="attributeName" value="countopenconnections.count"/> 
-	        <property name="default" value="true"/> 
-	        <property name="units" value="requests per second"/> 
-		  	<aggregator class="SourceAveragedAggregator"/>
-	        <evaluator class="TimedThroughputStatisticEvaluator"/> 
-	    </supportedStatistic>
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	        <property name="name" value="GLASSFISH HTTPS Throughput"/>
-	        <property name="description" value="The number of HTTPS requests processed per second."/>
-	        <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-2/connection-queue"/> 
-			<property name="attributeName" value="countopenconnections.count"/> 
-	        <property name="default" value="true"/> 
-	        <property name="units" value="requests per second"/> 
-		  	<aggregator class="SourceAveragedAggregator"/>
-	        <evaluator class="TimedThroughputStatisticEvaluator"/> 
-	    </supportedStatistic>
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTP queued requests"/>
-		    <property name="description" value="The number of queued requests."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-1/connection-queue"/>
-		    <property name="attributeName" value="countqueued.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="requests per second"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="TimedThroughputStatisticEvaluator"/> 
-	    </supportedStatistic>
-	    
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTPS queued requests"/>
-		    <property name="description" value="The number of queued requests."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-2/connection-queue"/>
-		    <property name="attributeName" value="countqueued.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="requests per second"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="TimedThroughputStatisticEvaluator"/> 
-	    </supportedStatistic>
+        <mBeanServerRef class="GlassfishMBeanServerRef"/>
+            
+        <!-- GLASSFISH.web.ThreadPool attributes -->
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTP Thread Pool Count "/>
+            <property name="description" value="The number of threads in the HTTP pool."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-pool-mon,name=network/http-listener-1/thread-pool"/>
+            <property name="attributeName" value="currentthreadsbusy.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="threads"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTPS Thread Pool Count"/>
+            <property name="description" value="The number of threads in the HTTPS pool."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-pool-mon,name=network/http-listener-2/thread-pool"/>
+            <property name="attributeName" value="currentthreadsbusy.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="threads"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Server JVM Thread Count"/>
+            <property name="description" value="The number of threads Server JVM is using."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
+            <property name="attributeName" value="threadcount.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="threads"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Thread Count"/>
+            <property name="description" value="The number of active threads."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
+            <property name="attributeName" value="threadcount.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="threads"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Peak Thread Count"/>
+            <property name="description" value="The peak number of active threads."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
+            <property name="attributeName" value="peakthreadcount.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="threads"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+        
+        <!-- GLASSFISH.web.GlobalRequestProcessor attributes -->
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Throughput"/>
+            <property name="description" value="The number of HTTP requests processed per second."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-1/connection-queue"/> 
+            <property name="attributeName" value="countopenconnections.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="requests per second"/> 
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTPS Throughput"/>
+            <property name="description" value="The number of HTTPS requests processed per second."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-2/connection-queue"/> 
+            <property name="attributeName" value="countopenconnections.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="requests per second"/> 
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTP queued requests"/>
+            <property name="description" value="The number of queued requests."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-1/connection-queue"/>
+            <property name="attributeName" value="countqueued.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="requests per second"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTPS queued requests"/>
+            <property name="description" value="The number of queued requests."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=connection-queue-mon,name=network/http-listener-2/connection-queue"/>
+            <property name="attributeName" value="countqueued.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="requests per second"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
 
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH Web Requests"/>
-		    <property name="description" value="The number of web requests."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=web-request-mon,name=web/request"/>
-		    <property name="attributeName" value="requestcount.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="requests per second"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="TimedThroughputStatisticEvaluator"/> 
-	    </supportedStatistic>
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Web Requests"/>
+            <property name="description" value="The number of web requests."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=web-request-mon,name=web/request"/>
+            <property name="attributeName" value="requestcount.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="requests per second"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
  
-	    <!-- GLASSFISH.web.Container stats -->
-	
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH Active Web Sessions"/>
-		    <property name="description" value="The number of active sessions."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=session-mon,name=web/session"/>
-		    <property name="attributeName" value="activesessionscurrent.current"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="sessions"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-	    </supportedStatistic>
-	
-	    <!-- GLASSFISH.web.Cache stats -->
-   
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTP Cache Size"/>
-		    <property name="description" value="The size of the cache."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-1/file-cache"/>
-		    <property name="attributeName" value="heapsize.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="MB"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="ConvertBytesToMegabytesEvaluator"/> 
-	    </supportedStatistic>
-
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTP Cache Hit Frequency"/>
-		    <property name="description" value="The number of cache hits per second."/>
-	    	<property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-1/file-cache"/>
-		    <property name="attributeName" value="contenthits.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="hits per second"/>
-	  		<aggregator class="SourceAveragedAggregator"/>
-	  		<evaluator class="TimedThroughputStatisticEvaluator"/> 
-    	</supportedStatistic>
-    	
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTPS Cache Size"/>
-		    <property name="description" value="The size of the cache."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-2/file-cache"/>
-		    <property name="attributeName" value="heapsize.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="MB"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="ConvertBytesToMegabytesEvaluator"/> 
-	    </supportedStatistic>
-
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-		    <property name="name" value="GLASSFISH HTTPS Cache Hit Frequency"/>
-		    <property name="description" value="The number of cache hits per second."/>
-	    	<property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-2/file-cache"/>
-		    <property name="attributeName" value="contenthits.count"/> 
-		    <property name="default" value="true"/> 
-		    <property name="units" value="hits per second"/>
-	  		<aggregator class="SourceAveragedAggregator"/>
-	  		<evaluator class="TimedThroughputStatisticEvaluator"/> 
-    	</supportedStatistic>
+        <!-- GLASSFISH.web.Container stats -->
     
-	    <!-- GLASSFISH.system.ServerInfo stats -->
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Active Web Sessions"/>
+            <property name="description" value="The number of active sessions."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=session-mon,name=web/session"/>
+            <property name="attributeName" value="activesessionscurrent.current"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="sessions"/>
+            <aggregator class="SourceAveragedAggregator"/>
+        </supportedStatistic>
+    
+        <!-- GLASSFISH.web.Cache stats -->
+   
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTP Cache Size"/>
+            <property name="description" value="The size of the cache."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-1/file-cache"/>
+            <property name="attributeName" value="heapsize.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="MB"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="ConvertBytesToMegabytesEvaluator"/> 
+        </supportedStatistic>
 
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	    	<property name="name" value="GLASSFISH Used Heap Memory"/>
-		    <property name="description" value="Used heap memory."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
-		    <property name="attributeName" value="usedheapsize-count.count"/> 
-	    	<property name="default" value="true"/> 
-		    <property name="units" value="MB"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="ConvertBytesToMegabytesEvaluator"/> 
-    	</supportedStatistic>
-    	
-	    <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	    	<property name="name" value="GLASSFISH Used NonHeap Memory"/>
-		    <property name="description" value="Used heap memory."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
-		    <property name="attributeName" value="usednonheapsize-count.count"/> 
-	    	<property name="default" value="true"/> 
-		    <property name="units" value="MB"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="ConvertBytesToMegabytesEvaluator"/> 
-    	</supportedStatistic>
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTP Cache Hit Frequency"/>
+            <property name="description" value="The number of cache hits per second."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-1/file-cache"/>
+            <property name="attributeName" value="contenthits.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="hits per second"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTPS Cache Size"/>
+            <property name="description" value="The size of the cache."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-2/file-cache"/>
+            <property name="attributeName" value="heapsize.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="MB"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="ConvertBytesToMegabytesEvaluator"/> 
+        </supportedStatistic>
 
-    	<supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
-	    	<property name="name" value="GLASSFISH Max Memory"/>
-		    <property name="description" value="Maximum heap memory."/>
-		    <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
-		    <property name="attributeName" value="maxheapsize-count.count"/> 
-	    	<property name="default" value="true"/> 
-		    <property name="units" value="MB"/>
-		  	<aggregator class="SourceAveragedAggregator"/>
-		  	<evaluator class="ConvertBytesToMegabytesEvaluator"/> 
-	    </supportedStatistic>
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH HTTPS Cache Hit Frequency"/>
+            <property name="description" value="The number of cache hits per second."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=file-cache-mon,name=network/http-listener-2/file-cache"/>
+            <property name="attributeName" value="contenthits.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="hits per second"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="TimedThroughputStatisticEvaluator"/> 
+        </supportedStatistic>
+    
+        <!-- GLASSFISH.system.ServerInfo stats -->
+
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Used Heap Memory"/>
+            <property name="description" value="Used heap memory."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
+            <property name="attributeName" value="usedheapsize-count.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="MB"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="ConvertBytesToMegabytesEvaluator"/> 
+        </supportedStatistic>
+        
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Used NonHeap Memory"/>
+            <property name="description" value="Used heap memory."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
+            <property name="attributeName" value="usednonheapsize-count.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="MB"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="ConvertBytesToMegabytesEvaluator"/> 
+        </supportedStatistic>
+
+        <supportedStatistic class="com.datasynapse.fabric.stats.MBeanStatisticsMetadata"> 
+            <property name="name" value="GLASSFISH Max Memory"/>
+            <property name="description" value="Maximum heap memory."/>
+            <property name="objectName" value="amx:pp=/mon/server-mon[server],type=memory-mon,name=jvm/memory"/>
+            <property name="attributeName" value="maxheapsize-count.count"/> 
+            <property name="default" value="true"/> 
+            <property name="units" value="MB"/>
+            <aggregator class="SourceAveragedAggregator"/>
+            <evaluator class="ConvertBytesToMegabytesEvaluator"/> 
+        </supportedStatistic>
     
     </statisticsProvider>
 

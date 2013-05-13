@@ -1,8 +1,8 @@
 /*
- * Created on Jun 30, 2005
- *
- * Copyright DataSynapse, Inc. 2000 - 2008
- * All rights reserved.
+ * Copyright (c) 2013 TIBCO Software Inc. All Rights Reserved.
+ * 
+ * Use is subject to the terms of the TIBCO license terms accompanying the download of this code. 
+ * In most instances, the license terms are contained in a file named license.txt.
  */
 package com.datasynapse.fabric.container.glassfish;
 
@@ -119,20 +119,20 @@ public class AMXStatisticsProvider extends AbstractStatisticsProvider {
         
         CompositeDataSupport valueCDS = null;
         try{
-           valueCDS = (CompositeDataSupport) getMBeanServerRef().getAttribute(statsName, attrArray[0]);
+            valueCDS = (CompositeDataSupport) getMBeanServerRef().getAttribute(statsName, attrArray[0]);
         } catch(javax.management.InstanceNotFoundException infe){
-        	// not necessarily an error, AMX beans are dynamically created so if, for example, no web 
-        	// apps are deployed there may not be a web-request-mon bean or an http-listener-1 etc.
-        	// So log it and return 0.0
-        	FabricLogRepository.STATISTICS.info("InstanceNotFoundException looking up " + stat.getAttributeName() + " in " + statsName);
-        	return 0.0;
+            // not necessarily an error, AMX beans are dynamically created so if, for example, no web 
+            // apps are deployed there may not be a web-request-mon bean or an http-listener-1 etc.
+            // So log it and return 0.0
+            FabricLogRepository.STATISTICS.info("InstanceNotFoundException looking up " + stat.getAttributeName() + " in " + statsName);
+            return 0.0;
         } catch (java.io.IOException ioe){
-        	// If the appserver is shutdown from the console this will result in an IOException
-        	// So log it and return 0.0 while we wait for the running condition to notice the server is gone.
-        	// This just avoids excessive confusion in the logs caused by thousands of lines of stack traces while
-        	// getting statistics.
-        	FabricLogRepository.STATISTICS.info("InstanceNotFoundException looking up " + stat.getAttributeName() + " in " + statsName);
-        	return 0.0;
+            // If the appserver is shutdown from the console this will result in an IOException
+            // So log it and return 0.0 while we wait for the running condition to notice the server is gone.
+            // This just avoids excessive confusion in the logs caused by thousands of lines of stack traces while
+            // getting statistics.
+            FabricLogRepository.STATISTICS.info("InstanceNotFoundException looking up " + stat.getAttributeName() + " in " + statsName);
+            return 0.0;
         }
         Object value = valueCDS.get(attrArray[1].trim());
         if (!(value instanceof Number)) {

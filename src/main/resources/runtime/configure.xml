@@ -38,16 +38,16 @@
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Xmx')]" action="Set Node Text" runtimeVariable="JAVA_MEMORY_OPTS" />
         <xpath expression="/domain/property[@name='administrative.domain.name']/@value" value="${DOMAIN_NAME}" />
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.endorsed.dirs')]" action="Set Node Text">
-        	-Djava.endorsed.dirs=${GLASSFISH_SERVER_BASE_DIR}/glassfish/modules/endorsed${path.separator}${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/endorsed 
+            -Djava.endorsed.dirs=${GLASSFISH_SERVER_BASE_DIR}/glassfish/modules/endorsed${path.separator}${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/endorsed 
         </xpath>
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.ext.dirs')]" action="Set Node Text">
-        	-Djava.ext.dirs=${GRIDLIB_JAVA_HOME}/lib/ext${path.separator}${GRIDLIB_JAVA_HOME}/jre/lib/ext${path.separator}${DOMAIN_HOME}/lib/ext 
+            -Djava.ext.dirs=${GRIDLIB_JAVA_HOME}/lib/ext${path.separator}${GRIDLIB_JAVA_HOME}/jre/lib/ext${path.separator}${DOMAIN_HOME}/lib/ext 
         </xpath>
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djavax.net.ssl.keyStore')]" action="Set Node Text">
-        	-Djavax.net.ssl.keyStore=${DOMAIN_HOME}/config/${SERVER_KEY_STORE_FILE_NAME} 
+            -Djavax.net.ssl.keyStore=${DOMAIN_HOME}/config/${SERVER_KEY_STORE_FILE_NAME} 
         </xpath>
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djavax.net.ssl.trustStore')]" action="Set Node Text">
-        	-Djavax.net.ssl.trustStore=${DOMAIN_HOME}/config/${SERVER_TRUST_STORE_FILE_NAME} 
+            -Djavax.net.ssl.trustStore=${DOMAIN_HOME}/config/${SERVER_TRUST_STORE_FILE_NAME} 
         </xpath>
     </configfiles>
     

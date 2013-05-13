@@ -7,6 +7,9 @@
 package com.datasynapse.fabric.container.glassfish;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -20,10 +23,6 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.naming.InitialContext;
 
-import com.datasynapse.commons.util.CalendarUtils;
-import com.datasynapse.commons.util.FileUtils;
-import com.datasynapse.commons.util.HostUtils;
-import com.datasynapse.commons.util.StringUtils;
 import com.datasynapse.fabric.common.RuntimeContextVariable;
 import com.datasynapse.fabric.container.ExecContainer;
 import com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo;
@@ -125,13 +124,14 @@ public class GlassfishContainer extends ExecContainer {
         }
 
         String GlassfishServerBaseDir = getStringVariableValue("GLASSFISH_SERVER_BASE_DIR");
-        if (StringUtils.isEmptyOrBlank(GlassfishServerBaseDir)) {
+        if (isNullOrEmpty(GlassfishServerBaseDir)) {
             throw new Exception("GLASSFISH_SERVER_BASE_DIR variable must be set in the Container");
         }
 
         this.ignoreHostnameVerification = Boolean.parseBoolean(getStringVariableValue("IGNORE_HOSTNAME_VERIFICATION", "false"));
         this.hostnameVerifierSaved = HttpsURLConnection.getDefaultHostnameVerifier();
     }
+    
     protected void renameServerConfigDir() throws Exception {
         String domainRoot = getStringVariableValue("DOMAIN_ROOT", "");
         String domainCapture = getStringVariableValue("CAPTURED_DOMAIN_NAME", "notset");
@@ -173,17 +173,17 @@ public class GlassfishContainer extends ExecContainer {
 
     protected void deployArchive(File archive, File deploymentRoot) throws Exception {
         final String fullFilename = archive.getName();
-        FileUtils.copyFile(archive, new File(deploymentRoot, fullFilename));
-        final String filename = FileUtils.stripExtension(fullFilename);
+        copyFile(archive, new File(deploymentRoot, fullFilename));
+        final String filename = stripExtension(fullFilename);
           
         if (getStringVariableValue(VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS, "true").equalsIgnoreCase("true")) {
-            long timeout = CalendarUtils.MINUTE * 2;
+            long timeout = 2 * 60000; //2 minutes
             String timeoutStr = getStringVariableValue(ARCHIVE_DEPLOYMENT_TIMEOUT_VAR);
-            if (!StringUtils.isEmpty(timeoutStr)) {
+            if (!isNullOrEmpty(timeoutStr)) {
                 timeout = Long.parseLong(timeoutStr) * 1000;
             }
     
-            ConditionalWait condWait = new ConditionalWait(timeout, 5 * CalendarUtils.SECOND);
+            ConditionalWait condWait = new ConditionalWait(timeout, 5 * 1000); //5 seconds
             Condition condition = new Condition() {
                 public boolean isTrue() throws Exception {
                     getEngineLogger().info("Checking if " + fullFilename + " has successfully been deployed.");
@@ -223,7 +223,7 @@ public class GlassfishContainer extends ExecContainer {
             jndiProperties.put("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
             jndiProperties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
             jndiProperties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");      
-            jndiProperties.put("org.omg.CORBA.ORBInitialHost", HostUtils.getHostname());
+            jndiProperties.put("org.omg.CORBA.ORBInitialHost", getHostName());
 
             if ((this.httpFeatureInfo != null) && (this.httpFeatureInfo.isHttpsEnabled())) {
                 checkAndSaveProperty(envSaved, "javax.net.ssl.trustStore");
@@ -262,14 +262,14 @@ public class GlassfishContainer extends ExecContainer {
         File dir = pathRelativeToServerDir.equals(".") ? getGlassfishServerRuntimeDir() : new File(getGlassfishServerRuntimeDir(), pathRelativeToServerDir);
         if (dir.exists()) {
             getEngineLogger().info("Deleting directory: " + dir.getAbsolutePath());
-            FileUtils.deleteDirectory(dir);
+            dir.delete();
         }
     }
 
     private File getGlassfishServerRuntimeDir() throws Exception {
         if (this.GlassfishServerRuntimeDir == null) {
             String GlassfishServerBaseDir = getStringVariableValue("GLASSFISH_SERVER_BASE_DIR");
-            if (StringUtils.isEmptyOrBlank(GlassfishServerBaseDir)) {
+            if (isNullOrEmpty(GlassfishServerBaseDir)) {
                 throw new Exception("GLASSFISH_SERVER_BASE_DIR variable must be set in the Container");
             }
             this.GlassfishServerRuntimeDir = new File(GlassfishServerBaseDir);
@@ -291,7 +291,7 @@ public class GlassfishContainer extends ExecContainer {
 
     protected void checkAndSaveProperty(Properties toBeSavedProps, String name) {
         String value = System.getProperty(name);
-        if (!StringUtils.isEmpty(value)) {
+        if (!isNullOrEmpty(value)) {
             toBeSavedProps.put(name, value);
         }
     }
@@ -326,5 +326,23 @@ public class GlassfishContainer extends ExecContainer {
         }
         return running;
     }
+    
+    private static boolean isNullOrEmpty(String string) {
+        return string == null || string.trim().length() == 0;
+    }
+    
+    private static String getHostName() throws Exception {
+        return InetAddress.getLocalHost().getHostName();
+    }
+    
+    private static void copyFile( File from, File to ) throws IOException {
+        Files.copy( from.toPath(), to.toPath() );
+    }
+    
+    private static String stripExtension( String fileName ) {
+        int idx = fileName.lastIndexOf( '.' );
+        return ( idx != -1 ) ? fileName.substring( 0, idx ) : fileName;
+    }
+
 
 }

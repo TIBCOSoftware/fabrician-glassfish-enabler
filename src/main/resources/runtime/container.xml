@@ -10,9 +10,9 @@
     <import package="com.datasynapse.fabric.domain"/>
     <import package="com.datasynapse.fabric.container.glassfish"/>
     
-    <property name="name" value="Glassfish Container"/>
-    <property name="version" value="1.0.0.0"/>
-    <property name="distributionVersion" value="3.0.1"/>
+    <property name="name" value="Glassfish Enabler"/>
+    <property name="version" value="1.0"/>
+    <property name="distributionVersion" value="3.1.2.2"/>
 
     <property name="supportedDomainType" value="J2EE"/>
     
@@ -79,7 +79,7 @@
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="JDK_VERSION"/>
-            <property name="value" value="1.6"/>
+            <property name="value" value="1.7"/>
             <property name="type" value="String"/>
             <property name="description" value="The version of the required JDK"/>
         </variable>

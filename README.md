@@ -10,6 +10,11 @@ J2EE application server to run in a TIBCO Silver Fabric software environment. Th
 Server Enabler for Silver Fabric provides integration between Silver Fabric and Glassfish. 
 The Enabler automatically provisions, orchestrates, controls and manages a Glassfish environment. 
 
+Supported Platforms
+--------------------------------------
+* Silver Fabric 5
+* Windows, Linux
+
 Installation
 --------------------------------------
 The Glassfish Server Enabler consists of an Enabler Runtime Grid Library and a Distribution Grid 

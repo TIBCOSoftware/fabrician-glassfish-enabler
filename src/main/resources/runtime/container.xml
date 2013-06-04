@@ -213,7 +213,7 @@
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="DOMAIN_HOME"/>
-            <property name="value" value="${DOMAIN_ROOT}/domain"/>
+            <property name="value" value="${DOMAIN_ROOT}/domain1"/>
             <property name="type" value="String"/>
             <property name="description" value="Location of the Domain configuration"/>
         </variable>
@@ -292,7 +292,7 @@
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="ADMIN_PASSWORD"/>
-            <property name="value" value="adminadmin"/>
+            <property name="value" value=""/>
             <property name="type" value="String"/>
             <property name="description" value="Admin Password"/>
         </variable>
@@ -374,7 +374,7 @@
             <property name="name" value="GLASSFISH Server JVM Thread Count"/>
             <property name="description" value="The number of threads Server JVM is using."/>
             <property name="objectName" value="amx:pp=/mon/server-mon[server],type=thread-system-mon,name=jvm/thread-system"/>
-            <property name="attributeName" value="threadcount.count"/> 
+            <property name="attributeName" value="threadcount.count"/>
             <property name="default" value="true"/> 
             <property name="units" value="threads"/>
             <aggregator class="SourceAveragedAggregator"/>

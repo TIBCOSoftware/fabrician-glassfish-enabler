@@ -23,9 +23,13 @@ used to integrate the Enabler, and the Distribution contains the application ser
 used for the Enabler. Installation of the Apache HTTP Server Enabler involves copying these Grid 
 Libraries to the SF_HOME/webapps/livecluster/deploy/resources/gridlib directory on the Silver Fabric Broker. 
 
+Additionally, the GlassFish Server Enabler requires the Silver Fabric Engine use Java 1.7. 
+
 Runtime Grid Library
 --------------------------------------
-The Enabler Runtime Grid Library is created by building the maven project:
+The Enabler Runtime Grid Library is created by building the maven project. The build depends on the SilverFabricSDK jar file that is distributed with TIBCO Silver Fabric. 
+The SilverFabricSDK.jar file needs to be referenced in the maven pom.xml or it can be placed in the project root directory.
+
 ```bash
 mvn package
 ```
@@ -45,6 +49,23 @@ mvn package -Ddistribution.location=/home/you/Downloads/glassfish-3.1.2.2.zip -D
 ```
 Statistics
 --------------------------------------
+By default, the monitoring service is enabled for GlassFish Server, but monitoring for the individual modules is not.
+To enable monitoring for a module, you change the monitoring level for that module to LOW or HIGH, You can choose to 
+leave monitoring OFF for objects that do not need to be monitored.
+
+* LOW - Simple statistics, such as create count, byte count, and so on
+* HIGH - Simple statistics plus method statistics, such as method count, duration, and so on
+* OFF - No monitoring, no impact on performance
+
+Monitoring for the following modules have been turned on in order to track the statistics below. This may have an impact on performance.
+
+* **Web Container** - HIGH
+* **Thread Pool** - LOW         
+* **JVM** - LOW        
+* **HTTP Service** - HIGH
+
+Tracked Statistics:
+
 * **GLASSFISH HTTP Thread Pool Count** - The number of threads in the http pool. 
 * **GLASSFISH HTTPS Thread Pool Count** - The number of threads in the https pool. 
 * **GLASSFISH Server JVM Thread Count** - The number of threads Server JVM is using. 
@@ -143,7 +164,7 @@ Runtime Context Variables
     * Default value: ${GLASSFISH_SERVER_BASE_DIR}/glassfish/domains
 * **DOMAIN_HOME** - Location of the Domain configuration.  
     * Type: String
-    * Default value: ${DOMAIN_ROOT}/domain
+    * Default value: ${DOMAIN_ROOT}/domain1
 * **CLIENT_KEY_STORE_FILE** - Client key store file for connecting to the GLASSFISH MBean server when TWO_WAY_SSL_ENABLED is true.  
     * Type: String
     * Default value: ${DOMAIN_HOME}/config/keystore.jks

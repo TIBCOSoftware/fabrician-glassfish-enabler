@@ -10,12 +10,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import javax.management.Attribute;
+import javax.management.AttributeList;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
@@ -23,6 +26,7 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.naming.InitialContext;
 
+import com.datasynapse.fabric.common.ActivationInfo;
 import com.datasynapse.fabric.common.RuntimeContextVariable;
 import com.datasynapse.fabric.container.ExecContainer;
 import com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo;
@@ -255,6 +259,29 @@ public class GlassfishContainer extends ExecContainer {
                 revertEnvironment(envSaved);
             }
             Thread.currentThread().setContextClassLoader(clSaved);
+        }
+    }
+    
+    @Override
+    protected void doInstall(ActivationInfo info) throws Exception {
+        //Module monitoring needs to be turn on to track the statistics.
+        
+        String mBeanString = "amx:pp=/domain/configs/config[server-config]/monitoring-service,type=module-monitoring-levels";
+        AttributeList attributeList = new AttributeList();
+        attributeList.add(new Attribute("HttpService", "HIGH"));
+        attributeList.add(new Attribute("Jvm", "LOW"));
+        attributeList.add(new Attribute("ThreadPool", "LOW"));
+        attributeList.add(new Attribute("WebContainer", "HIGH"));     
+        AttributeList outputAttrs = getMBeanServerConnection().setAttributes(new ObjectName(mBeanString), attributeList);
+        if (attributeList.size() == outputAttrs.size())
+            getEngineLogger().fine("Monitoring levels were set successfully.");
+        else {
+            List<String> missing = new ArrayList<String>();
+            for (Attribute a : attributeList.asList())
+                missing.add(a.getName());
+            for (Attribute a : outputAttrs.asList())
+                missing.remove(a.getName());
+            getEngineLogger().warning("Did not set following monitoring levels: " + missing);
         }
     }
 

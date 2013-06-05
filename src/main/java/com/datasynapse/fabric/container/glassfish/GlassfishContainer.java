@@ -32,20 +32,16 @@ import com.datasynapse.fabric.container.ExecContainer;
 import com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo;
 import com.datasynapse.fabric.util.ContainerUtils;
 import com.datasynapse.fabric.util.DynamicVarsUtils;
-import com.datasynapse.fabric.container.glassfish.condition.util.Condition;
-import com.datasynapse.fabric.container.glassfish.condition.util.ConditionalWait;
+
 import com.sun.net.ssl.HostnameVerifier;
 import com.sun.net.ssl.HttpsURLConnection;
 
 public class GlassfishContainer extends ExecContainer {
     private static final long serialVersionUID = 4555259893922948569L;
     // protected static final String CLUSTER_NAME = "CLUSTER_NAME";
-    private static final String GLASSFISH_HOME_VAR = "GLASSFISH_HOME";
-    private static final String GLASSFISH_SERVER_BASE_DIR_VAR = "GLASSFISH_SERVER_BASE_DIR";
     private static final String ADMIN_USERID = "ADMIN_USERID";
     private static final String ADMIN_PASSWORD = "ADMIN_PASSWORD";
     private static final String JMX_SERVICE_URL = "JMX_SERVICE_URL";
-    private static final String GLASSFISH_SERVER_ROOT_DIR_NAME = "glassfish";
     protected static final String GLASSFISH_SERVER_CONFIG_DIR_NAME_VAR = "GLASSFISH_SERVER_CONFIG_DIR_NAME";
     protected static final String TWO_WAY_SSL_ENABLED_VAR = "TWO_WAY_SSL_ENABLED";
     protected static final String CLIENT_KEY_STORE_FILE_VAR = "CLIENT_KEY_STORE_FILE";
@@ -56,8 +52,6 @@ public class GlassfishContainer extends ExecContainer {
     private static final String ARCHIVE_DEPLOYMENT_TIMEOUT_VAR = "ARCHIVE_DEPLOYMENT_TIMEOUT";
     private static final String VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS = "VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS";
     protected static final String IGNORE_HOSTNAME_VERIFICATION_SYS_PROPERTY = "org.glassfish.security.ignoreHttpsHost";
-    private static final String GLASSFISHHA_JAR_VAR = "GLASSFISHHA_JAR";
-    private static final String JGROUPS_JAR_VAR = "JGROUPS_JAR";
     private MBeanServerConnection mBeanServer = null;
     private File GlassfishServerRuntimeDir;
     protected HttpFeatureInfo httpFeatureInfo = null;
@@ -178,7 +172,6 @@ public class GlassfishContainer extends ExecContainer {
     protected void deployArchive(File archive, File deploymentRoot) throws Exception {
         final String fullFilename = archive.getName();
         copyFile(archive, new File(deploymentRoot, fullFilename));
-        final String filename = stripExtension(fullFilename);
           
         if (getStringVariableValue(VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS, "true").equalsIgnoreCase("true")) {
             long timeout = 120000; //2 minutes
@@ -186,25 +179,21 @@ public class GlassfishContainer extends ExecContainer {
             if (!isNullOrEmpty(timeoutStr)) {
                 timeout = Long.parseLong(timeoutStr) * 1000;
             }
-    
-            ConditionalWait condWait = new ConditionalWait(timeout, 5000); //5 seconds
-            Condition condition = new Condition() {
-                public boolean isTrue() throws Exception {
-                    getEngineLogger().info("Checking if " + fullFilename + " has successfully been deployed.");
-                    boolean result = false;
-                    try {
-                        String mBeanString = "amx:pp=/domain/applications,type=application,name=" + filename;
-                        String serverStarted = (String) getMBeanServerConnection().getAttribute(new ObjectName(mBeanString), "Enabled");
-                        if ("true".equals(serverStarted)) {
-                            result = true;
-                        }
-                    } catch (Exception e) {
-                        getEngineLogger().fine("While checking for successful deployment of " + fullFilename + ": " + e.toString());
+            boolean result = false;
+            long startTime = System.currentTimeMillis();
+            while ((timeout < 0 || (System.currentTimeMillis() - startTime) <= timeout)) {
+                try{
+                    if (!deployed(fullFilename)){
+                        Thread.sleep(5000);//5 seconds 
                     }
-                    return result;
+                } catch (InterruptedException e) {
+                    break;
                 }
-            };
-            boolean result = condWait.waitForCondition(condition);
+                if (deployed(fullFilename)) {
+                    result = true;
+                    break;
+                }                
+            }
             if (result) {
                 getEngineLogger().info("Archive " + fullFilename + " was successfully deployed");
             } else {
@@ -371,5 +360,19 @@ public class GlassfishContainer extends ExecContainer {
         return ( idx != -1 ) ? fileName.substring( 0, idx ) : fileName;
     }
 
-
+    private boolean deployed(String fullFileName){       
+        getEngineLogger().info("Checking if " + fullFileName + " has successfully been deployed.");
+        boolean result = false;
+        try {
+            String mBeanString = "amx:pp=/domain/applications,type=application,name=" + stripExtension(fullFileName);
+            String serverStarted = (String) getMBeanServerConnection().getAttribute(new ObjectName(mBeanString), "Enabled");
+            if ("true".equals(serverStarted)) {
+                result = true;
+            }
+        } catch (Exception e) {
+            getEngineLogger().fine("While checking for successful deployment of " + fullFileName + ": " + e.toString());
+        }
+        return result;
+       
+    }
 }

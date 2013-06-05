@@ -30,10 +30,10 @@ import com.datasynapse.fabric.common.ActivationInfo;
 import com.datasynapse.fabric.common.RuntimeContextVariable;
 import com.datasynapse.fabric.container.ExecContainer;
 import com.datasynapse.fabric.domain.featureinfo.HttpFeatureInfo;
-import com.datasynapse.fabric.util.DomainUtils;
-import com.datasynapse.fabric.util.FeatureUtils;
-import com.datasynapse.fabric.util.condition.Condition;
-import com.datasynapse.fabric.util.condition.ConditionalWait;
+import com.datasynapse.fabric.util.ContainerUtils;
+import com.datasynapse.fabric.util.DynamicVarsUtils;
+import com.datasynapse.fabric.container.glassfish.condition.util.Condition;
+import com.datasynapse.fabric.container.glassfish.condition.util.ConditionalWait;
 import com.sun.net.ssl.HostnameVerifier;
 import com.sun.net.ssl.HttpsURLConnection;
 
@@ -110,7 +110,7 @@ public class GlassfishContainer extends ExecContainer {
         getEngineLogger().fine("doInit invoked");
         super.doInit(additionalVariables);
 
-        this.httpFeatureInfo = ((HttpFeatureInfo)FeatureUtils.getFeatureInfo("Http Support", this, getCurrentDomain()));
+        this.httpFeatureInfo = ((HttpFeatureInfo)ContainerUtils.getFeatureInfo("Http Support", this, getCurrentDomain()));
 
         boolean httpEnabled = (this.httpFeatureInfo != null) && (this.httpFeatureInfo.isHttpEnabled());
         boolean httpsEnabled = (this.httpFeatureInfo != null) && (this.httpFeatureInfo.isHttpsEnabled());
@@ -119,11 +119,11 @@ public class GlassfishContainer extends ExecContainer {
             throw new Exception("HTTP or HTTPS must be enabled in the Domain");
         }
 
-        if (!DomainUtils.validateIntegerVariable(this, "HTTP_PORT")) {
+        if (!DynamicVarsUtils.validateIntegerVariable(this, "HTTP_PORT")) {
             throw new Exception("HTTP_PORT runtime context variable is not set");
         }
 
-        if (!DomainUtils.validateIntegerVariable(this, "HTTPS_PORT")) {
+        if (!DynamicVarsUtils.validateIntegerVariable(this, "HTTPS_PORT")) {
             throw new Exception("HTTPS_PORT runtime context variable is not set");
         }
 
@@ -181,13 +181,13 @@ public class GlassfishContainer extends ExecContainer {
         final String filename = stripExtension(fullFilename);
           
         if (getStringVariableValue(VERIFY_ARCHIVE_DEPLOYMENT_SUCCESS, "true").equalsIgnoreCase("true")) {
-            long timeout = 2 * 60000; //2 minutes
+            long timeout = 120000; //2 minutes
             String timeoutStr = getStringVariableValue(ARCHIVE_DEPLOYMENT_TIMEOUT_VAR);
             if (!isNullOrEmpty(timeoutStr)) {
                 timeout = Long.parseLong(timeoutStr) * 1000;
             }
     
-            ConditionalWait condWait = new ConditionalWait(timeout, 5 * 1000); //5 seconds
+            ConditionalWait condWait = new ConditionalWait(timeout, 5000); //5 seconds
             Condition condition = new Condition() {
                 public boolean isTrue() throws Exception {
                     getEngineLogger().info("Checking if " + fullFilename + " has successfully been deployed.");

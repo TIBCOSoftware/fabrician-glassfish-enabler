@@ -345,7 +345,7 @@
     </runningCondition>
     -->
 
-    <statisticsProvider class="AMXStatisticsProvider">
+    <statisticsProvider class="com.datasynapse.fabric.stats.provider.MBeanStatisticsProvider">
 
         <mBeanServerRef class="GlassfishMBeanServerRef"/>
             

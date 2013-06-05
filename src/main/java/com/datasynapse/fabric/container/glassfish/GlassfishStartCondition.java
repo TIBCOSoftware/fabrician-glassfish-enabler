@@ -10,13 +10,12 @@ import java.util.logging.Logger;
 
 import javax.management.ObjectName;
 
-import com.datasynapse.commons.util.CalendarUtils;
-import com.datasynapse.commons.util.LogUtils;
 import com.datasynapse.fabric.common.RuntimeContext;
 import com.datasynapse.fabric.common.StartCondition;
 import com.datasynapse.fabric.container.Container;
 import com.datasynapse.fabric.container.ProcessWrapper;
 import com.datasynapse.fabric.domain.Domain;
+import com.datasynapse.fabric.util.ContainerUtils;
 
 public class GlassfishStartCondition implements StartCondition {
 
@@ -54,9 +53,9 @@ public class GlassfishStartCondition implements StartCondition {
     }
     
     private GlassfishContainer container;
-    private transient Logger logger = LogUtils.forObject(this);
+    private transient Logger logger = ContainerUtils.getLogger(this);
     
     private long pollPeriod = DEFAULT_POLL_PERIOD;
-    private static final long DEFAULT_POLL_PERIOD = CalendarUtils.SECOND * 5;
+    private static final long DEFAULT_POLL_PERIOD = 5000;
     
 }

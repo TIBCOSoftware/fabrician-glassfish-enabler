@@ -6,7 +6,6 @@
  */
 package com.datasynapse.fabric.container.glassfish;
 
-import com.datasynapse.commons.util.CalendarUtils;
 import com.datasynapse.fabric.common.RunningCondition;
 import com.datasynapse.fabric.common.RuntimeContext;
 import com.datasynapse.fabric.container.Container;
@@ -17,7 +16,7 @@ public class GlassfishRunningCondition implements RunningCondition {
 
     private GlassfishContainer container;
     private String errorMessage;
-    private long pollPeriod = CalendarUtils.SECOND * 10;
+    private long pollPeriod = 10000;
     
     private static final String CRASHED_MSG = "Glassfish is not running: ";
     

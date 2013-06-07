@@ -1,4 +1,4 @@
-<containerConfig name="Glassfish 3.0 Container - version 1.0">
+<containerConfig name="Glassfish Container">
 
     <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib" include="processLauncher.xml">
         <velocity />

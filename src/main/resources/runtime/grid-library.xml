@@ -9,6 +9,6 @@
 
     <dependency>
        <grid-library-name>glassfish-distribution</grid-library-name>
-       <grid-library-version>3.1.2.2</grid-library-version>
+       <grid-library-version>${distribution.version}</grid-library-version>
     </dependency>
 </grid-library>

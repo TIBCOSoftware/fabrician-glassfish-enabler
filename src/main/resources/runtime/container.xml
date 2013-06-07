@@ -12,7 +12,7 @@
     
     <property name="name" value="Glassfish Enabler"/>
     <property name="version" value="1.0"/>
-    <property name="distributionVersion" value="3.1.2.2"/>
+    <property name="distributionVersion" value="${distribution.version}"/>
 
     <property name="supportedDomainType" value="J2EE"/>
     

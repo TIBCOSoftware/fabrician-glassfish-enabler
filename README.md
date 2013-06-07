@@ -33,7 +33,7 @@ The SilverFabricSDK.jar file needs to be referenced in the maven pom.xml or it c
 ```bash
 mvn package
 ```
-The version of the distribution can be optionally overridden:
+The version of the distribution is defaulted to 3.1.2.2.  However, it can be optionally overridden:
 ```bash
 mvn package -Ddistribution.version=3.1.2.2
 ```

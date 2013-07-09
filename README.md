@@ -20,7 +20,7 @@ Installation
 The Glassfish Server Enabler consists of an Enabler Runtime Grid Library and a Distribution Grid 
 Library. The Enabler Runtime contains information specific to a Silver Fabric version that is 
 used to integrate the Enabler, and the Distribution contains the application server or program 
-used for the Enabler. Installation of the Apache HTTP Server Enabler involves copying these Grid 
+used for the Enabler. Installation of the Glassfish Server Enabler involves copying these Grid 
 Libraries to the SF_HOME/webapps/livecluster/deploy/resources/gridlib directory on the Silver Fabric Broker. 
 
 Additionally, the GlassFish Server Enabler requires the Silver Fabric Engine use Java 1.7. 

@@ -21,13 +21,13 @@
     <property name="workDir" value="${GLASSFISH_SERVER_BASE_DIR}"/>
     
     <windowsCommand class="LifecycleCommand">
-        <property name='startupCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\startserv.bat"'/>
-        <property name='shutdownCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish\bin\stopserv.bat"'/>
+        <property name='startupCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish3\glassfish\bin\startserv.bat"'/>
+        <property name='shutdownCommand' value='"${GLASSFISH_SERVER_BASE_DIR}\glassfish3\glassfish\bin\stopserv.bat"'/>
     </windowsCommand>
     
     <unixCommand class="LifecycleCommand">
-        <property name="startupCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/startserv.sh"/>
-        <property name="shutdownCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin/stopserv.sh"/>
+        <property name="startupCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/bin/startserv.sh"/>
+        <property name="shutdownCommand" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/bin/stopserv.sh"/>
     </unixCommand>
 
     <supportedFeature class="Feature">
@@ -61,13 +61,13 @@
     <runtimeContextTemplate class="DefaultRuntimeContext">
         <variable class="RuntimeContextVariable">
             <property name="name" value="CAPTURE_INCLUDES"/>
-            <property name="value" value="glassfish/domains/domain/config/.*,glassfish/domains/domain/applications/.*/.*,glassfish/domains/domain/generated/.*/.*,glassfish/domains/domain/docroot/.*/.*"/>
+            <property name="value" value="glassfish3/glassfish/domains/domain/config/.*,glassfish3/glassfish/domains/domain/applications/.*/.*,glassfish3/glassfish/domains/domain/generated/.*/.*,glassfish3/glassfish/domains/domain/docroot/.*/.*"/>
             <property name="type" value="String"/>
             <property name="description" value="Directories to capture"/>
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="CAPTURE_EXCLUDES"/>
-            <property name="value" value="glassfish/domains/domain/osgi-cache/.*"/>
+            <property name="value" value="glassfish3/glassfish/domains/domain/osgi-cache/.*"/>
             <property name="type" value="String"/>
             <property name="description" value="Directories to ignore"/>
         </variable>
@@ -104,7 +104,7 @@
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="FELIX_HOME"/>
-            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/osgi/felix"/>
+            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/osgi/felix"/>
             <property name="type" value="Environment"/>
             <property name="description" value="The Felix container base directory"/>
         </variable>
@@ -207,7 +207,7 @@
         </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="DOMAIN_ROOT"/>
-            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/domains"/>
+            <property name="value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/domains"/>
             <property name="type" value="String"/>
             <property name="description" value="Location of the Domain configuration"/>
         </variable>

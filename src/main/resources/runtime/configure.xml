@@ -1,14 +1,14 @@
 <containerConfig name="Glassfish Container">
 
-    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib" include="processLauncher.xml">
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/lib" include="processLauncher.xml">
         <velocity />
     </configfiles>
-    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/bin" include="*.bat">
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/bin" include="*.bat">
         <regex pattern="java\s+-" replacement="${GRIDLIB_JAVA_HOME}\bin\java -" />
         <regex pattern="%JAVA%\s+-" replacement="${GRIDLIB_JAVA_HOME}\bin\java -" />
         <regex pattern="--domaindir" replacement="--domaindir ${DOMAIN_ROOT}" />
     </configfiles>
-    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish/config" include="asadminenv.conf">
+    <configfiles baseDir="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/config" include="asadminenv.conf">
         <property key="AS_ADMIN_PORT" value="${ADMIN_PORT}" />
     </configfiles>
     <configfiles baseDir="${DOMAIN_HOME}/docroot" include="index.html">
@@ -18,7 +18,7 @@
     <configfiles baseDir="${DOMAIN_HOME}/config" include="sun-acc.xml">
         <xpath expression="/client-container/target-server/@port" value="${ORB_LISTENER_PORT}" />
         <xpath expression="/client-container/target-server/@name" value="${SERVER_ID}" />
-        <xpath expression="/client-container/message-security-config/provider-config[@provider-id='ClientProvider']/property[@name='security.config']/@value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/appclient/wss-client-config-1.0.xml" />
+        <xpath expression="/client-container/message-security-config/provider-config[@provider-id='ClientProvider']/property[@name='security.config']/@value" value="${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/lib/appclient/wss-client-config-1.0.xml" />
     </configfiles>
     
     <configfiles baseDir="${DOMAIN_HOME}/config" include="domain.xml">
@@ -38,7 +38,7 @@
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Xmx')]" action="Set Node Text" runtimeVariable="JAVA_MEMORY_OPTS" />
         <xpath expression="/domain/property[@name='administrative.domain.name']/@value" value="${DOMAIN_NAME}" />
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.endorsed.dirs')]" action="Set Node Text">
-            -Djava.endorsed.dirs=${GLASSFISH_SERVER_BASE_DIR}/glassfish/modules/endorsed${path.separator}${GLASSFISH_SERVER_BASE_DIR}/glassfish/lib/endorsed 
+            -Djava.endorsed.dirs=${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/modules/endorsed${path.separator}${GLASSFISH_SERVER_BASE_DIR}/glassfish3/glassfish/lib/endorsed 
         </xpath>
         <xpath expression="/domain/configs/config[@name='server-config']/java-config/jvm-options[contains(. , '-Djava.ext.dirs')]" action="Set Node Text">
             -Djava.ext.dirs=${GRIDLIB_JAVA_HOME}/lib/ext${path.separator}${GRIDLIB_JAVA_HOME}/jre/lib/ext${path.separator}${DOMAIN_HOME}/lib/ext 

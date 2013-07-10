@@ -69,49 +69,26 @@
                 </property>
             </activation>
             <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <id>unpack-distribution</id>
-                                <phase>process-resources</phase>  
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <ant target="unpack" inheritRefs="true">
-                                            <property name="source" value="${distribution.location}"/>
-                                            <property name="target" value="${project.build.directory}/tmp"/> 
-                                        </ant>    
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>2.4</version>
-                        <executions>
-                            <execution>
-                                <id>distribution</id>
-                                <configuration>
-                                    <appendAssemblyId>false</appendAssemblyId>
-                                    <finalName>${project.artifactId}-${distribution.version}-distribution-gridlib</finalName>
-                                    <descriptors>
-                                         <descriptor>src/main/assembly/distribution.xml</descriptor>
-                                    </descriptors>
-                                    <attach>false</attach>
-                                </configuration>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+                <plugins>                    
+					<plugin>
+					    <groupId>org.fabrician.maven-plugins</groupId>
+					    <artifactId>distribution-plugin</artifactId>
+					    <version>1.1</version>
+					    <configuration>
+					        <distroSource>${distribution.location}</distroSource>
+					        <distroFilename>${project.build.directory}/${project.artifactId}-${distribution.version}-distribution-gridlib.tar.gz</distroFilename>
+					        <distroResources>src/main/resources/distribution</distroResources>
+					    </configuration>
+					    <executions>
+					        <execution>
+					            <id>package-distribution</id>
+					            <phase>package</phase>
+					            <goals>
+					                <goal>package</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+					</plugin>                    
                 </plugins>
             </build>
         </profile>
